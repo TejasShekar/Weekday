@@ -1,10 +1,14 @@
-import { useState } from "react";
+import * as React from "react";
+import { CssBaseline } from "@mui/material";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <h1>Weekday Search Jobs </h1>;
+  return (
+    <>
+      <CssBaseline enableColorScheme />
+      <h1>Search Jobs | Weekday</h1>
+    </>
+  );
 }
 
 export default App;
