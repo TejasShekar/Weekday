@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: [],
+  jobPosts: [],
+  totalCount: 0,
   isLoading: false,
   isError: false,
 };
@@ -14,13 +15,14 @@ const jobsDataSlice = createSlice({
       state.isLoading = true;
       state.isError = null;
     },
-    fetchDataSuccess(state, action) {
+    fetchDataSuccess(state, { payload }) {
       state.isLoading = false;
-      state.data = { ...state.data, ...action.payload };
+      state.totalCount = payload.totalCount;
+      state.jobPosts = [...state.jobPosts, ...payload.jdList];
     },
-    fetchDataFailure(state, action) {
+    fetchDataFailure(state, { payload }) {
       state.isLoading = false;
-      state.isError = action.payload;
+      state.isError = payload;
     },
   },
 });
