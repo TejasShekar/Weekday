@@ -36,31 +36,39 @@ const JobsSearchPage = () => {
     };
   }, [jobPosts, totalCount]); // Only re-run the effect if jobPosts or totalCount changes
 
-  return (
-    jobPosts?.length && (
-      <>
-        <Typography variant="body2" textAlign="center">
-          Total Matching Jobs : {totalCount}
+  if (jobPosts?.length <= 0 && isLoading) {
+    return (
+      <Typography variant="h5" textAlign="center">
+        Fetching jobs...
+      </Typography>
+    );
+  }
+
+  return jobPosts?.length > 0 ? (
+    <>
+      <Typography variant="body2" textAlign="center" gutterBottom>
+        Total Matching Jobs : {totalCount}
+      </Typography>
+      <Grid container spacing={2} sx={{ padding: "20px" }}>
+        {jobPosts?.map((job) => (
+          <Grid item xs={12} sm={6} md={4} xl={3} key={job.jdUid}>
+            <JobPostingCard job={job} />
+          </Grid>
+        ))}
+        <Grid item ref={observerTarget}></Grid>
+      </Grid>
+
+      {isLoading && (
+        <Typography variant="h5" textAlign="center" gutterBottom>
+          Loading more jobs...
         </Typography>
-        <Grid container spacing={2} sx={{ padding: "20px" }}>
-          {jobPosts?.map((job) => (
-            <Grid item xs={12} sm={6} md={4} xl={3} key={job.jdUid}>
-              <JobPostingCard job={job} />
-            </Grid>
-          ))}
-          <Grid item ref={observerTarget}></Grid>
-        </Grid>
-        {isLoading && (
-          <Typography ref={observerTarget} variant="body2">
-            Loading more jobs...
-          </Typography>
-        )}
-        {isError && (
-          <Typography ref={observerTarget} variant="body2">
-            No matching jobs found !
-          </Typography>
-        )}
-      </>
+      )}
+    </>
+  ) : (
+    isError && (
+      <Typography variant="body2" textAlign="center" gutterBottom>
+        No matching jobs found !
+      </Typography>
     )
   );
 };

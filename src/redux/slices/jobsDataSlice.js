@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   jobPosts: [],
   totalCount: 0,
-  isLoading: false,
+  isLoading: true,
   isError: false,
 };
 
@@ -59,7 +59,9 @@ export const fetchData = (limit, offset) => async (dispatch) => {
       throw new Error("Failed to fetch data");
     }
     const data = await response.json();
+    // setTimeout(() => {
     dispatch(fetchDataSuccess(data));
+    // }, 3000);
   } catch (error) {
     if (error.name !== "AbortError") {
       // Only dispatch error action if it's not an aborted request
