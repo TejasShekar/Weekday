@@ -4,17 +4,15 @@ const initialState = {
   data: [],
   isLoading: false,
   isError: false,
-  controller: null,
 };
 
 const jobsDataSlice = createSlice({
   name: "jobsData",
   initialState,
   reducers: {
-    fetchDataStart(state, action) {
+    fetchDataStart(state) {
       state.isLoading = true;
       state.isError = null;
-      state.controller = action.payload;
     },
     fetchDataSuccess(state, action) {
       state.isLoading = false;
@@ -30,17 +28,19 @@ const jobsDataSlice = createSlice({
 export const { fetchDataStart, fetchDataSuccess, fetchDataFailure } =
   jobsDataSlice.actions;
 
-export const fetchData = (limit, offset) => async (dispatch, getState) => {
-  const { jobsData } = getState();
-  if (jobsData.controller) {
-    // Need to understand more about handling abort controllers w.r.t. RTK
-    jobsData.controller?.abort();
+let controller = null;
+
+export const fetchData = (limit, offset) => async (dispatch) => {
+  // Abort any ongoing/previous calls
+  if (controller) {
+    controller.abort();
   }
 
-  const controller = new AbortController();
+  // Create new abort controller
+  controller = new AbortController();
   const signal = controller.signal;
 
-  dispatch(fetchDataStart(signal));
+  dispatch(fetchDataStart());
   try {
     const response = await fetch(
       "https://api.weekday.technology/adhoc/getSampleJdJSON",
