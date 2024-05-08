@@ -25,23 +25,16 @@ const JobFilters = ({ appliedFilters }) => {
     if (reason === "selectOption") {
       dispatch(addFilter({ id, value }));
     } else if (reason === "removeOption") {
-      dispatch(removeFilter({ id, value }));
+      if (Array.isArray(value) && !value?.length) {
+        dispatch(clearFilter({ id }));
+      } else {
+        dispatch(removeFilter({ id, value }));
+      }
     } else if (reason === "clear") {
       dispatch(clearFilter({ id }));
     } else {
       dispatch(removeFilter({ id, value }));
     }
-  };
-
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setDrawerOpen(open);
   };
 
   return (
@@ -57,14 +50,14 @@ const JobFilters = ({ appliedFilters }) => {
           },
           marginBottom: "10px",
         }}
-        onClick={toggleDrawer(true)}
+        onClick={() => setDrawerOpen(open)}
       >
         Toggle Filters
       </Button>
       <SwipeableDrawer
         anchor="bottom"
         open={isDrawerOpen}
-        onClose={toggleDrawer(false)}
+        onClose={() => setDrawerOpen(open)}
       >
         <Grid
           container
@@ -84,9 +77,8 @@ const JobFilters = ({ appliedFilters }) => {
               isGrouped,
             } = eachFilter;
             return (
-              <Grid item xs={12} md={3}>
+              <Grid item key={id} xs={12} md={3}>
                 <Autocomplete
-                  key={id}
                   id={id + "-filter"}
                   sx={{ minWidth: "10rem" }}
                   multiple={isMultiSelect}

@@ -8,15 +8,11 @@ export const filterJobs = ({ state, id, jdList, filterMode }) => {
   let jobsToFilter = jdList || state.jobPosts;
 
   if (filterMode === "addFilter") {
-    console.log("filtered existing filteredJobPosts");
     // Filter by provided `id`
     return state.filteredJobPosts.filter((currJob) =>
       filterLogic(state, id, currJob)
     );
   }
-  console.log(
-    `filtered ${jdList?.length ? "newly fetched dataset" : "entire jobPosts"}`
-  );
 
   // if (!id) {
   return jobsToFilter.filter((currJob) => {
@@ -53,7 +49,7 @@ const filterLogic = (state, id, currJob) => {
     } else if (id === "minExp") {
       return currJob[id] >= filterValue;
     } else {
-      return currJob[id]?.toLowerCase().startsWith(filterValue);
+      return currJob[id]?.toLowerCase().startsWith(filterValue?.toLowerCase());
     }
   }
 
