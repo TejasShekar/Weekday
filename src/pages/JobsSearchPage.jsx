@@ -7,6 +7,7 @@ import JobFilters from "../components/JobFilters";
 
 const JobsSearchPage = () => {
   const [offset, setOffset] = useState(0);
+  const [isIOIntersecting, setIOIntersecting] = useState(false);
   const observerTarget = useRef(null);
   const dispatch = useDispatch();
   const { filteredJobPosts, totalCount, isLoading, isError, appliedFilters } =
@@ -25,7 +26,10 @@ const JobsSearchPage = () => {
         filteredJobPosts.length < totalCount &&
         offset <= totalCount
       ) {
+        setIOIntersecting(true);
         setOffset((prevOffset) => prevOffset + 10);
+      } else {
+        setIOIntersecting(false);
       }
     });
 
@@ -45,7 +49,7 @@ const JobsSearchPage = () => {
       <JobFilters appliedFilters={appliedFilters} />
       <Typography variant="body1" textAlign="center" gutterBottom>
         Total Matching Jobs :{" "}
-        {isLoading ? (
+        {isLoading || isIOIntersecting ? (
           <CircularProgress color="inherit" disableShrink size="16px" />
         ) : (
           filteredJobPosts.length
@@ -61,7 +65,7 @@ const JobsSearchPage = () => {
       </Grid>
 
       <Box sx={{ textAlign: "center", p: 2, height: "80px" }}>
-        {isLoading ? (
+        {isLoading || isIOIntersecting ? (
           <CircularProgress color="inherit" disableShrink />
         ) : (
           filteredJobPosts.length === 0 && (
