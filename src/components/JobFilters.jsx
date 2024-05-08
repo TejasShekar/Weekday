@@ -50,14 +50,15 @@ const JobFilters = ({ appliedFilters }) => {
           },
           marginBottom: "10px",
         }}
-        onClick={() => setDrawerOpen(open)}
+        onClick={() => setDrawerOpen(true)}
       >
         Toggle Filters
       </Button>
       <SwipeableDrawer
         anchor="bottom"
         open={isDrawerOpen}
-        onClose={() => setDrawerOpen(open)}
+        onOpen={() => setDrawerOpen(true)}
+        onClose={() => setDrawerOpen(false)}
       >
         <Grid
           container
