@@ -56,7 +56,7 @@ To run the project locally, follow these steps:
    npm run dev --host
    ```
 
-3. Your terminal will now show a set of links. Hover the mouse pointer over the link and follow the instructions show
+3. Your terminal will now show a set of links. Hover the mouse pointer over the link and follow the instructions shown
 
 - `Local` : This is to preview on your local system
 - `Network` : This is to preview over other devices connected to the same network as your local system
