@@ -1,5 +1,7 @@
 # Weekday Frontend Interview Assignment: Candidate Application Platform
 
+Deployed Preview : [Click Here](https://discoverweekday.netlify.app/)
+
 ## Features
 
 - Interactive Job Cards implemented as per [design](https://drive.google.com/file/d/1YMbZDo6GHIpHRSnigklspSUG_KZfWdM7/view).
