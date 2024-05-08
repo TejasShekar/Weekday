@@ -12,6 +12,7 @@ import {
 import { styled } from "@mui/material/styles";
 import BoltIcon from "@mui/icons-material/Bolt";
 import JobDescriptionModal from "./JobDescriptionModal";
+import { capitalizeSentence } from "../utils/helperUtils";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   margin: theme.spacing(1),
@@ -67,14 +68,6 @@ const JobPostingCard = ({ job }) => {
       return `Max. ${salary.format(maxJdSalary)}`;
     }
   };
-
-  function capitalizeSentence(sentence) {
-    const words = sentence.split(" ");
-    const capitalizedWords = words.map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    });
-    return capitalizedWords.join(" ");
-  }
 
   return (
     <StyledCard>
